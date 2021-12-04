@@ -21,7 +21,7 @@ public class CartService implements ICartService {
     IExtMsGatewayService extMsGatewayService;
 
     public CalculatedCartDTO calculateCart(CartDTO cartDTO) {
-        ProductCostEntity productCostEntity = getP(cartDTO.getProducts());
+        ProductCostEntity productCostEntity = getProductCost(cartDTO.getProducts());
         if (productCostEntity == null || productCostEntity.getProductCostList() == null) {
             throw new CostNotFoundException();
         }
@@ -32,7 +32,7 @@ public class CartService implements ICartService {
     }
 
     @Cacheable(cacheNames = "productCost")
-    public ProductCostEntity getP(List<ProductDTO> products) {
+    public ProductCostEntity getProductCost(List<ProductDTO> products) {
         return extMsGatewayService.getProductCost(products);
     }
 
